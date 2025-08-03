@@ -2,59 +2,24 @@ package model;
 
 import exceptions.CasillaReveladaException;
 
-public class CeldaJuego {
+// HERENCIA APLICADA: CeldaJuego extiende ElementoJuego
+public class CeldaJuego extends ElementoJuego {
     private boolean contieneMina;
     private boolean descubierta;
     private boolean marcada;
     private int minasCercanas;
-    private final int posicionX;
-    private final int posicionY;
 
-    /**
-     * Crea una nueva celda en la posición dada,
-       posicionX coordenada horizontal (columna)
-       posicionY coordenada vertical (fila)
-     */
-    public CeldaJuego(int posicionX, int posicionY) {
-        this.posicionX = posicionX;
-        this.posicionY = posicionY;
+    public CeldaJuego(int fila, int columna) {
+        super(fila, columna);  // Llama al constructor padre
         this.contieneMina = false;
         this.descubierta = false;
         this.marcada = false;
         this.minasCercanas = 0;
     }
 
-    // Comportamiento principal
-    public void asignarMina() {
-        this.contieneMina = true;
-    }
-
-    /**
-       Muestra el contenido de la celda
-       CasillaReveladaException si la celda ya fue revelada
-     */
-    public void revelar() throws CasillaReveladaException {
-        if (this.descubierta) {
-            throw new CasillaReveladaException("Celda " + obtenerPosicionTexto() + " ya revelada");
-        }
-        this.descubierta = true;
-        this.marcada = false;
-    }
-
-    /**
-      Su funcion es alternar el estado de marcado de la celda
-     */
-    public void alternarMarcado() {
-        if (!this.descubierta) {
-            this.marcada = !this.marcada;
-        }
-    }
-
-    /**
-      Devuelve el símbolo que representa la celda,
-      @return el carácter que muestra su estado actual
-     */
-    public char obtenerSimboloVisual() {
+    // POLIMORFISMO: implementación específica del método abstracto
+    @Override
+    public char obtenerSimbolo() {
         if (this.marcada) return '⚑';
         if (!this.descubierta) return '■';
         if (this.contieneMina) return '☢';
@@ -62,12 +27,32 @@ public class CeldaJuego {
         return (char) ('0' + this.minasCercanas);
     }
 
-    /**
-      Devuelve la posición como texto,
-      @return cadena con la posición
-     */
+    public void asignarMina() {
+        this.contieneMina = true;
+    }
+
+    public void revelar() throws CasillaReveladaException {
+        if (this.descubierta) {
+            throw new CasillaReveladaException("Celda " + obtenerPosicion() + " ya revelada");
+        }
+        this.descubierta = true;
+        this.marcada = false;
+    }
+
+    public void alternarMarcado() {
+        if (!this.descubierta) {
+            this.marcada = !this.marcada;
+        }
+    }
+
+    // Método legacy para compatibilidad
+    public char obtenerSimboloVisual() {
+        return obtenerSimbolo();
+    }
+
+    // Método legacy para compatibilidad
     public String obtenerPosicionTexto() {
-        return String.format("%c%d", 'A' + posicionY, posicionX + 1);
+        return obtenerPosicion();
     }
 
     // Métodos de acceso
@@ -76,21 +61,15 @@ public class CeldaJuego {
     public boolean estaMarcada() { return marcada; }
     public int getMinasCercanas() { return minasCercanas; }
     public void setMinasCercanas(int cantidad) { this.minasCercanas = cantidad; }
-    public int getPosicionX() { return posicionX; }
-    public int getPosicionY() { return posicionY; }
 
-    /**
-      Genera información detallada del estado de la celda.
-      @return cadena con todos los atributos
-     */
     public String obtenerEstadoCompleto() {
         return String.format("Celda %s - Mina: %b | Descubierta: %b | Marcada: %b | Vecinas: %d",
-                obtenerPosicionTexto(), contieneMina, descubierta, marcada, minasCercanas);
+                obtenerPosicion(), contieneMina, descubierta, marcada, minasCercanas);
     }
 
     @Override
     public String toString() {
-        return String.valueOf(obtenerSimboloVisual());
+        return String.valueOf(obtenerSimbolo());
     }
 
     @Override
@@ -98,11 +77,11 @@ public class CeldaJuego {
         if (this == obj) return true;
         if (!(obj instanceof CeldaJuego)) return false;
         CeldaJuego otra = (CeldaJuego) obj;
-        return posicionX == otra.posicionX && posicionY == otra.posicionY;
+        return fila == otra.fila && columna == otra.columna;
     }
 
     @Override
     public int hashCode() {
-        return 31 * posicionX + posicionY;
+        return 31 * fila + columna;
     }
 }
