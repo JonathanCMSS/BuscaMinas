@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.CasillaReveladaException;
+
 public class CeldaJuego {
     private boolean contieneMina;
     private boolean descubierta;
