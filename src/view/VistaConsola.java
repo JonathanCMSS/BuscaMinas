@@ -4,9 +4,7 @@ import model.TableroBuscaminas;
 import java.util.Scanner;
 
 /**
- * Vista en consola para el juego Buscaminas (MVC)
- * @version 2.1
- * @since Julio 2023
+ * Vista en consola para el juego Buscaminas (MVC) - version final
  */
 public class VistaConsola {
     private final Scanner scanner;
@@ -19,10 +17,10 @@ public class VistaConsola {
 
     public void mostrarEncabezado() {
         System.out.println("\n" +
-                "================================================\n" +
-                "||                 BUSCAMINAS                 ||\n" +
-                "||                   (2023)                   ||\n" +
-                "================================================\n");
+                "============================================\n" +
+                "||        ✨GAME BUSCAMINAS✨             ||\n" +
+                "||             ✨(2025)✨                 ||\n" +
+                "============================================\n");
     }
 
     public void mostrarInstrucciones() {
@@ -80,16 +78,16 @@ public class VistaConsola {
 
     public void mostrarVictoria() {
         System.out.println("""
-            \n------------------------------
-              |        ¡VICTORIA!          |
-              ------------------------------""");
+            \n-------------------------------
+              |        ✅¡VICTORIA!✅       |
+              -------------------------------""");
     }
 
     public void mostrarDerrota() {
         System.out.println("""
-            \n-------------------------------------
-              | ¡Has pisado una mina, has perdido! |
-              -------------------------------------""");
+            \n--------------------------------------------
+              | ❌❗Has pisado una mina, has perdido❗❌ |
+              --------------------------------------------""");
     }
 
     // ------------------ MENÚS ------------------
