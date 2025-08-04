@@ -63,7 +63,7 @@ public class ControladorJuego {
     private void procesarOpcion(int opcion) {
         switch (opcion) {
             case 1 -> iniciarNuevaPartida();
-            case 2 -> guardarPartida();
+            case 2 -> cargarPartida();
             case 3 -> mostrarEstadisticas();
             case 4 -> vista.mostrarInstrucciones();
             case 5 -> enEjecucion = false;
@@ -160,6 +160,20 @@ public class ControladorJuego {
 
     private void mostrarEstadisticas() {
         vista.mostrarEstado(jugador.getEstadisticas());
+    }
+
+    private void cargarPartida() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(RUTA_PARTIDA))) {
+            PartidaGuardada partida = (PartidaGuardada) ois.readObject();
+            this.tablero = partida.tablero();
+            this.inicioPartida = partida.inicioPartida();
+            vista.mostrarEstado("Partida cargada exitosamente");
+            jugarPartida();
+        } catch (FileNotFoundException e) {
+            vista.mostrarError("No hay partidas guardadas");
+        } catch (Exception e) {
+            vista.mostrarError("Error al cargar: " + e.getMessage());
+        }
     }
 
     private void guardarPartida() {
