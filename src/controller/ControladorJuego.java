@@ -63,6 +63,7 @@ public class ControladorJuego {
     private void procesarOpcion(int opcion) {
         switch (opcion) {
             case 1 -> iniciarNuevaPartida();
+            case 2 -> guardarPartida();
             case 3 -> mostrarEstadisticas();
             case 4 -> vista.mostrarInstrucciones();
             case 5 -> enEjecucion = false;
