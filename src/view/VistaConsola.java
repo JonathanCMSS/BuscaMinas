@@ -96,6 +96,7 @@ public class VistaConsola {
         System.out.println("""
             \nMENÚ DE OPCIONES:
             1. Nueva partida
+            2. Cargar partida
             3. Estadísticas
             4. Instrucciones
             5. Salir
