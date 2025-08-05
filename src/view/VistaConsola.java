@@ -26,7 +26,19 @@ public class VistaConsola {
     public void mostrarInstrucciones() {
         System.out.println("""
             \nINSTRUCCION PARA JUGAR===========================================
-            Se juega asi: Primero debes ingresar la letra y luego el numero (B3)
+            Para jugar: Debes ingresar la letra + numero, asi -> B3
+            🎮COMANDOS 🎮:
+            - marcar [coordenada] -> Marcar/desmarcar mina (ej: marcar B3)
+            - guardar -> Guardar partida actual
+            - ayuda -> Mostrar estas instrucciones
+            - salir -> Regresar al menú principal   
+            
+            SIMBOLOS:
+            - ■ -> Casilla sin descubrir
+            - ⚑ -> Casilla marcada como mina
+            - ☢ -> Mina (solo visible al perder)
+            - [espacio] -> Casilla vacía (sin minas cerca)
+            ==================================================================
             \n""");
     }
 
