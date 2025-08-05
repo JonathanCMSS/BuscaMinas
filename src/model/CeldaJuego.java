@@ -1,9 +1,12 @@
 package model;
 
 import exceptions.CasillaReveladaException;
+import java.io.Serializable;
 
 // HERENCIA APLICADA: CeldaJuego extiende ElementoJuego
-public class CeldaJuego extends ElementoJuego {
+public class CeldaJuego extends ElementoJuego implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private boolean contieneMina;
     private boolean descubierta;
     private boolean marcada;
