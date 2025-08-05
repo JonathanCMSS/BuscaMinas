@@ -55,7 +55,13 @@ public class ControladorJuego {
     private void buclePrincipal() {
         while (enEjecucion) {
             vista.mostrarMenuPrincipal();
-            procesarOpcion(vista.leerOpcionMenu());
+            int opcion = vista.leerOpcionMenu();
+            procesarOpcion(opcion);
+
+            // Si salimos de una partida con "salir", resetear para volver al menú
+            if (!enEjecucion && opcion != 5) {
+                enEjecucion = true;
+            }
         }
         guardarJugador();
     }
@@ -79,7 +85,7 @@ public class ControladorJuego {
     }
 
     private void jugarPartida() {
-        while (!tablero.isJuegoFinalizado()) {
+        while (!tablero.isJuegoFinalizado() && enEjecucion) {  // Agregando && enEjecucion
             vista.limpiarPantalla();
             vista.dibujarTablero(tablero);
             procesarComando(vista.leerComando());
@@ -148,7 +154,10 @@ public class ControladorJuego {
         switch (comando) {
             case "guardar" -> guardarPartida();
             case "ayuda" -> vista.mostrarInstrucciones();
-            case "salir" -> enEjecucion = false;
+            case "salir" -> {
+                vista.mostrarEstado("Regresando al menú principal...");
+                enEjecucion = false; // Sale del bucle jugarPartida()
+            }
             default -> vista.mostrarError("Comando no reconocido");
         }
     }
