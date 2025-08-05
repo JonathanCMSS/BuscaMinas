@@ -4,9 +4,12 @@ import exceptions.CasillaReveladaException;
 import exceptions.CoordenadaFueraDeRangoException;
 import exceptions.JuegoFinalizadoException;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class TableroBuscaminas {
+public class TableroBuscaminas implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private static final int FILAS = 10;
     private static final int COLUMNAS = 10;
     private static final int TOTAL_MINAS = 15;
@@ -15,7 +18,9 @@ public class TableroBuscaminas {
     private int minasRestantes;
     private boolean juegoFinalizado;
     private boolean victoria;
-    private Random generador;
+
+    // Marcamos como transient para evitar problemas de serialización
+    private transient Random generador;
 
     public TableroBuscaminas() {
         this.celdas = new CeldaJuego[FILAS][COLUMNAS];
@@ -148,7 +153,6 @@ public class TableroBuscaminas {
         return true;
     }
 
-    // CORRECCIÓN: Actualizar contador cuando se marca/desmarca
     public void marcarCelda(int fila, int columna) throws JuegoFinalizadoException, CoordenadaFueraDeRangoException {
         if (juegoFinalizado) {
             throw new JuegoFinalizadoException();
@@ -173,6 +177,12 @@ public class TableroBuscaminas {
 
     private boolean esCoordenadaValida(int fila, int columna) {
         return fila >= 0 && fila < FILAS && columna >= 0 && columna < COLUMNAS;
+    }
+
+    // Método para reinicializar el generador después de la deserialización
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.generador = new Random(); // Reinicializar el generador Random
     }
 
     // Getters
